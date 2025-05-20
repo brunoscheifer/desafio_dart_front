@@ -34,8 +34,8 @@ Future<void> deletarProdutoConfirmacao(
       final response = await http.delete(url);
 
       if (response.statusCode == 200 || response.statusCode == 204) {
-        // 200 OK ou 204 No Content são códigos de sucesso para DELETE
-        onProdutoDeletado(); // Chama o callback para recarregar a lista
+        
+        onProdutoDeletado();
 
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(content: Text('Produto "$nomeProduto" deletado com sucesso!')),

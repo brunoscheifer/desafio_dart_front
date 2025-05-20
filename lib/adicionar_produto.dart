@@ -59,7 +59,7 @@ void mostrarFormularioAdicionarProduto(
                 nomeController.text,
                 precoController.text,
                 quantidadeController.text,
-                onProdutoAdicionado, // Recebe a função de callback
+                onProdutoAdicionado,
               );
               Navigator.of(context).pop();
             },
@@ -87,14 +87,11 @@ Future<void> adicionarNovoProduto(String id, String nome, String preco, String q
     );
 
     if (response.statusCode == 201) {
-      // Produto criado com sucesso, chama a função de callback para recarregar a lista
       onProdutoAdicionado();
     } else {
       print('Erro ao adicionar produto: ${response.statusCode}');
-      // Exiba uma mensagem de erro para o usuário (pode ser feito na tela principal)
     }
   } catch (e) {
     print('Erro de conexão: $e');
-    // Exiba uma mensagem de erro de conexão
   }
 }

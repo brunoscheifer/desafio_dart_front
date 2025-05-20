@@ -20,7 +20,7 @@ Future<void> mostrarFormularioEditarProduto(
 
   showDialog(
     context: context,
-    builder: (BuildContext dialogContext) { // Renomeado para dialogContext para evitar conflito
+    builder: (BuildContext dialogContext) {
       return AlertDialog(
         title: const Text('Editar Produto'),
         content: SingleChildScrollView(
@@ -53,35 +53,31 @@ Future<void> mostrarFormularioEditarProduto(
           TextButton(
             child: const Text('Cancelar'),
             onPressed: () {
-              Navigator.of(dialogContext).pop(); // Usa dialogContext aqui
+              Navigator.of(dialogContext).pop();
             },
           ),
           TextButton(
             child: const Text('Salvar Alterações'),
             onPressed: () {
-              // Alterado de 'mongoId' para '_id' para corresponder ao backend
               final String? mongoIdParaAtualizar = produtoAtual['_id']?.toString();
 
               if (mongoIdParaAtualizar == null || mongoIdParaAtualizar.isEmpty) {
-                ScaffoldMessenger.of(dialogContext).showSnackBar( // Usa dialogContext aqui
+                ScaffoldMessenger.of(dialogContext).showSnackBar(
                   const SnackBar(content: Text('Erro: ID do produto inválido (_id do Mongo ausente).')),
                 );
-                Navigator.of(dialogContext).pop(); // Fecha o diálogo mesmo com erro de ID
+                Navigator.of(dialogContext).pop();
                 return;
               }
 
-              // Chama a função de atualização e AGUARDA ela finalizar
-              // O Navigator.of(context).pop() DEVE VIR DEPOIS, dentro da função 'atualizarProduto'
               atualizarProduto(
-                dialogContext, // Passa o dialogContext
-                mongoIdParaAtualizar, // Agora contém o _id real
+                dialogContext,
+                mongoIdParaAtualizar,
                 idController.text,
                 nomeController.text,
                 precoController.text,
                 quantidadeController.text,
                 onProdutoAtualizado,
               );
-              // REMOVIDO: Navigator.of(context).pop(); // Esta linha causava o erro "deactivated widget's ancestor"
             },
           ),
         ],
@@ -91,8 +87,8 @@ Future<void> mostrarFormularioEditarProduto(
 }
 
 Future<void> atualizarProduto(
-  BuildContext context, // Este é o BuildContext do diálogo
-  String mongoId, // Este parâmetro agora receberá o valor de '_id'
+  BuildContext context,
+  String mongoId,
   String idCustom,
   String nome,
   String preco,
@@ -119,20 +115,20 @@ Future<void> atualizarProduto(
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text('Produto "$nome" atualizado com sucesso!')),
       );
-      onProdutoAtualizado(); // Chama o callback para recarregar a lista
-      Navigator.of(context).pop(); // Fecha o diálogo APÓS exibir a SnackBar de sucesso
+      onProdutoAtualizado();
+      Navigator.of(context).pop();
     } else {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text('Erro ao atualizar produto: ${response.statusCode}')),
       );
       print('Erro ao atualizar produto: ${response.statusCode}');
-      Navigator.of(context).pop(); // Fecha o diálogo APÓS exibir a SnackBar de erro
+      Navigator.of(context).pop();
     }
   } catch (e) {
     ScaffoldMessenger.of(context).showSnackBar(
       const SnackBar(content: Text('Erro de conexão ao atualizar produto.')),
     );
     print('Erro de conexão ao atualizar: $e');
-    Navigator.of(context).pop(); // Fecha o diálogo APÓS exibir a SnackBar de erro de conexão
+    Navigator.of(context).pop();
   }
 }

@@ -88,20 +88,18 @@ class _ListaProdutosState extends State<ListaProdutos> {
                         onPressed: () {
                           mostrarFormularioEditarProduto(
                             context,
-                            produto, // Passa o produto completo
+                            produto,
                             _fetchProdutos,
                           );
                         },
                       ),
-                      // Ícone de Deletar
                       IconButton(
                         icon: const Icon(Icons.delete),
                         color: Colors.red,
                         onPressed: () {
                           deletarProdutoConfirmacao(
                             context,
-                            // *** MUDANÇA AQUI: de 'mongoId' para '_id' ***
-                            produto['_id'].toString(), // Use o '_id' retornado pelo backend
+                            produto['_id'].toString(),
                             produto['nome'] ?? 'produto desconhecido',
                             _fetchProdutos,
                           );
