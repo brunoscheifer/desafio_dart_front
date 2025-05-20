@@ -1,3 +1,5 @@
+// ignore_for_file: avoid_print
+
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
@@ -88,14 +90,10 @@ Future<void> adicionarNovoProduto(String id, String nome, String preco, String q
       // Produto criado com sucesso, chama a função de callback para recarregar a lista
       onProdutoAdicionado();
     } else {
-      // ignore: avoid_print
       print('Erro ao adicionar produto: ${response.statusCode}');
-      // ignore: avoid_print
-      print('Corpo da resposta: ${response.body}');
       // Exiba uma mensagem de erro para o usuário (pode ser feito na tela principal)
     }
   } catch (e) {
-    // ignore: avoid_print
     print('Erro de conexão: $e');
     // Exiba uma mensagem de erro de conexão
   }
